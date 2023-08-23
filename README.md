@@ -1,7 +1,5 @@
-# SMS Receiver Channel
+# SMS phishing App
 
-Use channel on the client_side (Flutter) and the platform_side (Android) and invoke sms receiver method asynchronously that returns a Future.
 
-This method call executes a block of kotlin code on android and after successful completion of the method , it returns the result back to the flutter.
 
-![SmsReceiver](https://user-images.githubusercontent.com/69586214/227218792-ac5d34ff-794d-4db8-a759-ea7116010ef5.png)
+flutter로 SMS 텍스트를 추출하여 flask 서버로 전송 후 스미싱사이트 검증여부 및 스팸문자 처리 후 결과값 반환
