@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'SMS Receiver'),
+      home: const MyHomePage(title: '스미싱 탐지기'),
     );
   }
 }

@@ -14,9 +14,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String sms = 'No SMS';
+  String sms = '문자가 없어요';
   String status = '';
   String url = '';
+  String delete = '';
+  String message = '';
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
       final Map<String, String> headers = {
         'Content-Type': 'application/json',
       };
-      var url = Uri.http('10.0.2.2:8000', '/check-sms/');
+      var url = Uri.https('db91-203-232-224-243.ngrok-free.app', '/check-sms/');
       var response = await http.post(
         url,
         headers: headers,
@@ -38,9 +41,24 @@ class _MyHomePageState extends State<MyHomePage> {
         var jsonResponse =
             convert.jsonDecode(response.body) as Map<String, dynamic>;
         //메세지 오면 위에 주소로 요청해서 정보값 받아오기
-        print(jsonResponse['results'][0]['status']);
-        status = jsonResponse['results'][0]['status'];
+        // delete = '삭제하시겠습니까?';
+        print(jsonResponse['result']);
+        status = jsonResponse['result'];
         // url = jsonResponse['results'][0]['url'];
+        if (status == 'malicious') {
+          delete = '들어가면 ㅈ됨';
+          message = '삭제하시겠습니까?';
+        } else if (status == 'caution') {
+          delete = '들어가면 주읫됨';
+          message = '삭제하시겠습니까?';
+        } else if (status == 'attention') {
+          delete = 'ㄱㅊ음';
+        } else if (status == 'safe') {
+          delete = '야미';
+        } else {
+          delete = '알수없음';
+        }
+
         print('Number of books about http: $sms.');
       } else {
         print('Request failed with status: ${response.statusCode}.');
@@ -60,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Incoming message :',
+              '수신메세지 :',
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -78,6 +96,17 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               status,
               style: const TextStyle(fontSize: 40, color: Colors.red),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              delete,
+              style: const TextStyle(fontSize: 50, color: Colors.red),
+            ),
+            Text(
+              message,
+              style: const TextStyle(fontSize: 50, color: Colors.red),
             ),
           ],
         ),
